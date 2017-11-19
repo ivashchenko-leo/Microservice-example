@@ -1,0 +1,75 @@
+{
+  "parsers": [
+    {
+      "name": "depthHttp",
+      "type": "binance.parsers.DepthHttpParser"
+    },
+    {
+      "name" : "depthWs",
+      "type": "binance.parsers.DepthWsParser"
+    }
+  ],
+  "connections": [
+    {
+      "name": "ws",
+      "type": "binance.connection.WsConnection"
+    },
+    {
+      "name": "http",
+      "type": "binance.connection.HttpConnection"
+    }
+  ],
+  "handlers": [
+    {
+      "name": "default",
+      "type": "binance.seekers.DefaultProfitSeeker"
+    }
+  ],
+  "workers": [
+    {
+      "connection": "http",
+      "parser": "depthHttp",
+      "handler": "default",
+      "type": "binance.workers.ScheduledWorker",
+      "params": {
+        "symbol": "BNBBTC",
+        "address": "https://www.binance.com/api/v1/depth?symbol=BNBBTC",
+        "period": 300,
+        "timeUnit": "MILLISECONDS"
+      }
+    },
+    {
+      "connection": "http",
+      "parser": "depthHttp",
+      "handler": "default",
+      "type": "binance.workers.ScheduledWorker",
+      "params": {
+        "symbol": "BNBETH",
+        "address": "https://www.binance.com/api/v1/depth?symbol=BNBETH",
+        "period": 300,
+        "timeUnit": "MILLISECONDS"
+      }
+    },
+    {
+      "connection": "http",
+      "parser": "depthHttp",
+      "handler": "default",
+      "type": "binance.workers.ScheduledWorker",
+      "params": {
+        "symbol": "ETHBTC",
+        "address": "https://www.binance.com/api/v1/depth?symbol=ETHBTC",
+        "period": 300,
+        "timeUnit": "MILLISECONDS"
+      }
+    },
+    {
+      "connection": "ws",
+      "parser": "depthWs",
+      "handler": "default",
+      "type": "binance.workers.DefaultWorker",
+      "params": {
+        "address": "wss://stream.binance.com:9443/ws/bnbbtc@depth@0ms"
+      }
+    }
+  ]
+}
