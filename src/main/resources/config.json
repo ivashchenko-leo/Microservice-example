@@ -23,6 +23,10 @@
     {
       "name": "default",
       "type": "binance.seekers.DefaultProfitSeeker"
+    },
+    {
+      "name": "wsDepth",
+      "type": "binance.seekers.WsProfitSeeker"
     }
   ],
   "workers": [
@@ -65,7 +69,7 @@
     {
       "connection": "ws",
       "parser": "depthWs",
-      "handler": "default",
+      "handler": "wsDepth",
       "type": "binance.workers.DefaultWorker",
       "params": {
         "address": "wss://stream.binance.com:9443/ws/bnbbtc@depth@0ms"
