@@ -11,11 +11,18 @@ import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
+/**
+ * Implementation of IConfigLoader for json config
+ * @see IConfigLoader
+ */
 public class DefaultConfigLoader implements IConfigLoader {
     private final static Logger logger = LoggerFactory.getLogger(IConfigLoader.class);
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    /**
+     * @see IConfigLoader
+     */
     public ConfigInstance load(final String path) throws Exception {
         logger.debug("Build the application from the configuration file {}", path);
         JsonNode rootNode = objectMapper.readTree(

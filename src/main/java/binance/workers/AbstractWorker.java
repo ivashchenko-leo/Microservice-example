@@ -9,6 +9,9 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 import java.util.concurrent.Future;
 
+/**
+ * Abstract class that used in a thread. It represents what the thread will do.
+ */
 public abstract class AbstractWorker {
     protected static final Logger logger = LoggerFactory.getLogger(AbstractWorker.class);
 
@@ -27,5 +30,9 @@ public abstract class AbstractWorker {
         this.handler = handler;
     }
 
+    /**
+     * Body of the thread
+     * @return
+     */
     public abstract Future<?> start();
 }

@@ -8,6 +8,10 @@ import org.slf4j.LoggerFactory;
 import java.net.URL;
 import java.util.function.Consumer;
 
+/**
+ * Implementation of IConnection for http connection to a data source
+ * @see IConnection
+ */
 public class HttpConnection implements IConnection {
     private final static Logger logger = LoggerFactory.getLogger(IConfigLoader.class);
 

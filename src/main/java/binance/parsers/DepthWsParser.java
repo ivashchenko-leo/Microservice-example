@@ -5,6 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Parser for json from web socket url
+ * @see IParser
+ */
 public class DepthWsParser implements IParser {
 
     private ObjectMapper objectMapper = new ObjectMapper();

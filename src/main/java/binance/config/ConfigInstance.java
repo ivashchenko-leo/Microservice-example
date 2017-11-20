@@ -8,6 +8,9 @@ import binance.workers.AbstractWorker;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This class represents a loaded config
+ */
 public class ConfigInstance {
     private final Map<String, IParser> parsers;
     private final Map<String, IHandler> handlers;

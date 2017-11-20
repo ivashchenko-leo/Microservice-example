@@ -7,11 +7,22 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * A handler that seeks for a profitable arbitrage opportunity.
+ * @see IHandler
+ */
 public class DefaultProfitSeeker implements IHandler<String> {
     private final static Logger logger = LoggerFactory.getLogger(IConfigLoader.class);
 
     private Integer lastUpdateId = 0;
 
+
+    /**
+     * I'm not sure if I understood the task right
+     * In general this method looks for bids which price is bigger than ask's price
+     * @param bidsAsks Map with bids, asks and lastUpdateId
+     * @return A string with prices and quantity of profitable bids and asks
+     */
     @Override
     public String handle(Map<String, Object> bidsAsks) {
         if (lastUpdateId.equals(bidsAsks.get("lastUpdateId"))) {
@@ -62,7 +73,6 @@ public class DefaultProfitSeeker implements IHandler<String> {
                     continue;
                 }
 
-
                 if (askPrice <= 0.0 || askQuantity <= 0.0) {
                     logger.debug("Ask's price or quantity is zero or less, lastUpdateId {}", lastUpdateId);
                     continue;
@@ -78,10 +88,12 @@ public class DefaultProfitSeeker implements IHandler<String> {
                 asksRelevantQuantity.append(askQuantity).append(" ");
                 asksRelevantPrices.append(askPrice).append(" ");
                 if (bidQuantity <= askQuantity) {
+                    //that means we could use this ask for another bid to get some profit
                     ask.set(1, String.valueOf(askQuantity - bidQuantity));
                     profit += (bidPrice - askPrice) * bidQuantity;
                     break;
                 } else {
+                    //we can look for another ask for this bid
                     bidQuantity -= askQuantity;
                     bid.set(1, String.valueOf(bidQuantity));
                     ask.set(1, String.valueOf(0.0));

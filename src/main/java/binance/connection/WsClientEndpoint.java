@@ -9,6 +9,10 @@ import javax.websocket.ClientEndpoint;
 import javax.websocket.OnMessage;
 import java.util.function.Consumer;
 
+/**
+ * Javax web socket endpoint implementation. On message calls consumer from IConnection.connect
+ * @see WsConnection
+ */
 @ClientEndpoint
 public class WsClientEndpoint {
     private final static Logger logger = LoggerFactory.getLogger(IConfigLoader.class);

@@ -6,6 +6,11 @@ import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
+/**
+ * Extends DefaultProfitSeeker handler because in the web socket connection
+ * we receive just an update for bids and asks so we have to merge this update to previous data
+ * @see DefaultProfitSeeker
+ */
 public class WsProfitSeeker extends DefaultProfitSeeker {
     private final static Logger logger = LoggerFactory.getLogger(IConfigLoader.class);
 
@@ -32,6 +37,13 @@ public class WsProfitSeeker extends DefaultProfitSeeker {
         return super.handle(bidsAsks);
     }
 
+    /**
+     * Checks if update's elements are inside of target if it's so then removes
+     * them (if a price is zero) or replaces with a new value. If target doesn't contain
+     * update's elements then adds it.
+     * @param update bids or asks to add, replace, remove
+     * @param target all bids or asks received until now
+     */
     private void merge(List<List<Object>> update, List<List<Object>> target) {
         for (List<Object> element : update) {
             int index = Collections.binarySearch(target,

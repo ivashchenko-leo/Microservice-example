@@ -8,6 +8,9 @@ import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+/**
+ * An implementation for AbstractWorker for a simple single thread.
+ */
 public class DefaultWorker extends AbstractWorker {
     public DefaultWorker(final Map<String, Object> params,
                          final IConnection connection,

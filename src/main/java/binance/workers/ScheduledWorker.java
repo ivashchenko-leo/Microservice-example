@@ -9,6 +9,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * An implementation for AbstractWorker for a simple single thread.
+ */
 public class ScheduledWorker extends AbstractWorker {
     public ScheduledWorker(final Map<String, Object> params,
                            final IConnection connection,

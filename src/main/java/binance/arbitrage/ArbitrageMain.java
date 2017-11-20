@@ -18,6 +18,10 @@ public class ArbitrageMain {
 
     private static Logger logger = LoggerFactory.getLogger(ArbitrageMain.class);
 
+    /**
+     Entry point, it loads config and starts workers.
+     Stores Futures from workers in list, we could use them in the future.
+     */
     public static void main(String[] args) {
         try {
             IConfigLoader configLoader = new DefaultConfigLoader();
