@@ -74,6 +74,24 @@
       "params": {
         "address": "wss://stream.binance.com:9443/ws/bnbbtc@depth@0ms"
       }
+    },
+    {
+      "connection": "ws",
+      "parser": "depthWs",
+      "handler": "wsDepth",
+      "type": "binance.workers.DefaultWorker",
+      "params": {
+        "address": "wss://stream.binance.com:9443/ws/bnbeth@depth@0ms"
+      }
+    },
+    {
+      "connection": "ws",
+      "parser": "depthWs",
+      "handler": "wsDepth",
+      "type": "binance.workers.DefaultWorker",
+      "params": {
+        "address": "wss://stream.binance.com:9443/ws/ethbtc@depth@0ms"
+      }
     }
   ]
 }

@@ -30,12 +30,11 @@ public class DefaultConfigLoader implements IConfigLoader {
         );
 
         logger.debug("Looking for parsers....");
-        Map<String, IParser> parsersMap = new HashMap<>();
+        Map<String, Class> parsersMap = new HashMap<>();
         Iterator<JsonNode> parsersElements = rootNode.get("parsers").elements();
         while (parsersElements.hasNext()) {
             JsonNode next = parsersElements.next();
-            IParser type = (IParser) Class.forName(next.get("type").textValue())
-                    .getConstructor().newInstance();
+            Class type = Class.forName(next.get("type").textValue());
             String name = next.get("name").textValue();
 
             parsersMap.put(name, type);
@@ -44,12 +43,11 @@ public class DefaultConfigLoader implements IConfigLoader {
         logger.debug("Found {} parsers", parsersMap.size());
 
         logger.debug("Looking for handlers....");
-        Map<String, IHandler> handlersMap = new HashMap<>();
+        Map<String, Class> handlersMap = new HashMap<>();
         Iterator<JsonNode> handlersElements = rootNode.get("handlers").elements();
         while (handlersElements.hasNext()) {
             JsonNode next = handlersElements.next();
-            IHandler type = (IHandler) Class.forName(next.get("type").textValue())
-                    .getConstructor().newInstance();
+            Class type = Class.forName(next.get("type").textValue());
             String name = next.get("name").textValue();
 
             handlersMap.put(name, type);
@@ -58,12 +56,11 @@ public class DefaultConfigLoader implements IConfigLoader {
         logger.debug("Found {} handlers", handlersMap.size());
 
         logger.debug("Looking for connection handlers....");
-        Map<String, IConnection> connectionsMap = new HashMap<>();
+        Map<String, Class> connectionsMap = new HashMap<>();
         Iterator<JsonNode> connectionsElements = rootNode.get("connections").elements();
         while (connectionsElements.hasNext()) {
             JsonNode next = connectionsElements.next();
-            IConnection type = (IConnection) Class.forName(next.get("type").textValue())
-                    .getConstructor().newInstance();
+            Class type = Class.forName(next.get("type").textValue());
             String name = next.get("name").textValue();
 
             connectionsMap.put(name, type);
@@ -79,24 +76,27 @@ public class DefaultConfigLoader implements IConfigLoader {
 
             Map<String, Object> params = objectMapper.readValue(workerConfig.get("params").traverse()
                                                                 , HashMap.class);
+            //different instances for each worker
+            IConnection connectionInstance = (IConnection) connectionsMap
+                    .get(workerConfig.get("connection").textValue()).getConstructor().newInstance();
+            IParser parserInstance = (IParser) parsersMap
+                    .get(workerConfig.get("parser").textValue()).getConstructor().newInstance();
+            IHandler handlerInstance = (IHandler) handlersMap
+                    .get(workerConfig.get("handler").textValue()).getConstructor().newInstance();
             AbstractWorker worker = (AbstractWorker) Class.forName(workerConfig.get("type").textValue())
                     .getConstructor(Map.class,
                             IConnection.class,
                             IParser.class,
                             IHandler.class)
                     .newInstance(params,
-                            connectionsMap.get(workerConfig.get("connection").textValue()),
-                            parsersMap.get(workerConfig.get("parser").textValue()),
-                            handlersMap.get(workerConfig.get("handler").textValue()));
+                            connectionInstance,
+                            parserInstance,
+                            handlerInstance);
             workersList.add(worker);
             logger.debug("Create worker with config {}", workerConfig);
         }
         logger.debug("{} workers are created", workersList.size());
 
-        return new ConfigInstance(
-                parsersMap,
-                handlersMap,
-                connectionsMap,
-                workersList);
+        return new ConfigInstance(workersList);
     }
 }
