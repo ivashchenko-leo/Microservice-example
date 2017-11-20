@@ -5,6 +5,11 @@ import org.junit.Test;
 
 import java.util.*;
 
+/**
+ * A test for the most important part of the application.
+ * It took to much time to write this application =(
+ * so I've decided to write only the most important test
+ */
 public class DefaultProfitSeekerTest {
 
     private DefaultProfitSeeker seeker = new DefaultProfitSeeker();
