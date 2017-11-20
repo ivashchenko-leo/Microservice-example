@@ -28,6 +28,8 @@ public class DefaultWorker extends AbstractWorker {
                         StringBuilder result = new StringBuilder((String) parsedInput.get("s"));
                         if (!profit.equals("None")) {
                             logger.info(result.append(" ").append(profit).toString());
+                        } else {
+                            logger.debug("No profit found");
                         }
                     } catch (Exception ex) {
                         logger.error(ex.toString());

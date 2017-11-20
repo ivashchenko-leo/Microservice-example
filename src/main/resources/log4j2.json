@@ -2,7 +2,6 @@
   "configuration": {
     "name": "Log4j2Config",
     "properties": {},
-    "ThresholdFilter": { "level": "debug" },
     "appenders": {
       "Console": { "name": "STDOUT",
         "PatternLayout": { "pattern": "%d %p %c{1.} [%t] %m%n" },
@@ -10,7 +9,7 @@
       }
     },
     "loggers": {
-      "root": { "level": "info", "AppenderRef": { "ref": "STDOUT" }}
+      "root": { "level": "debug", "AppenderRef": { "ref": "STDOUT" }}
     }
   }
 }

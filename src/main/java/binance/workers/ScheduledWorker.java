@@ -32,6 +32,8 @@ public class ScheduledWorker extends AbstractWorker {
                         String profit = (String) handler.handle(parsedInput);
                         if (!profit.equals("None")) {
                             logger.info(result.append(" ").append(profit).toString());
+                        } else {
+                            logger.debug("No profit found");
                         }
                     } catch (Exception ex) {
                         logger.error(ex.toString());

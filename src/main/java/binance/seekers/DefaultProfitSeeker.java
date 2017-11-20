@@ -1,9 +1,14 @@
 package binance.seekers;
 
+import binance.config.IConfigLoader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.List;
 import java.util.Map;
 
 public class DefaultProfitSeeker implements IHandler<String> {
+    private final static Logger logger = LoggerFactory.getLogger(IConfigLoader.class);
 
     private Integer lastUpdateId = 0;
 
@@ -15,6 +20,7 @@ public class DefaultProfitSeeker implements IHandler<String> {
             lastUpdateId = (Integer) bidsAsks.get("lastUpdateId");
         }
 
+        logger.debug("Handle data with lastUpdateId {}", lastUpdateId);
         List<List<Object>> bids = (List<List<Object>>) bidsAsks.get("bids");
         List<List<Object>> asks = (List<List<Object>>) bidsAsks.get("asks");
 
@@ -24,6 +30,7 @@ public class DefaultProfitSeeker implements IHandler<String> {
         StringBuilder asksRelevantQuantity = new StringBuilder();
         double profit = 0.0;
 
+        logger.debug("Analyze {} bids and {} asks", bids.size(), asks.size());
         outerloop:
         for (List<Object> bid : bids) {
             double bidPrice;
@@ -33,10 +40,13 @@ public class DefaultProfitSeeker implements IHandler<String> {
                 bidPrice = Double.valueOf((String)bid.get(0));
                 bidQuantity = Double.valueOf((String)bid.get(1));
             } catch (Exception ex) {
+                logger.debug("Bid has a bad value {} or {} lastUpdateId {}",
+                        bid.get(0), bid.get(1), lastUpdateId);
                 continue;
             }
             //or zero, less than zero values
             if (bidPrice <= 0.0 || bidQuantity <= 0.0) {
+                logger.debug("Bid's price or quantity is zero or less, lastUpdateId {}", lastUpdateId);
                 continue;
             }
 
@@ -47,11 +57,14 @@ public class DefaultProfitSeeker implements IHandler<String> {
                     askPrice = Double.valueOf((String)ask.get(0));
                     askQuantity = Double.valueOf((String)ask.get(1));
                 } catch (Exception ex) {
+                    logger.debug("Ask has a bad value {} or {} lastUpdateId {}",
+                            bid.get(0), bid.get(1), lastUpdateId);
                     continue;
                 }
 
 
                 if (askPrice <= 0.0 || askQuantity <= 0.0) {
+                    logger.debug("Ask's price or quantity is zero or less, lastUpdateId {}", lastUpdateId);
                     continue;
                 }
 

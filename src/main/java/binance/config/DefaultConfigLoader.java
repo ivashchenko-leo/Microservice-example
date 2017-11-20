@@ -6,17 +6,23 @@ import binance.seekers.IHandler;
 import binance.workers.AbstractWorker;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
 public class DefaultConfigLoader implements IConfigLoader {
+    private final static Logger logger = LoggerFactory.getLogger(IConfigLoader.class);
+
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public ConfigInstance load(final String path) throws Exception {
+        logger.debug("Build the application from the configuration file {}", path);
         JsonNode rootNode = objectMapper.readTree(
                 getClass().getClassLoader().getResourceAsStream("config.json")
         );
 
+        logger.debug("Looking for parsers....");
         Map<String, IParser> parsersMap = new HashMap<>();
         Iterator<JsonNode> parsersElements = rootNode.get("parsers").elements();
         while (parsersElements.hasNext()) {
@@ -26,8 +32,11 @@ public class DefaultConfigLoader implements IConfigLoader {
             String name = next.get("name").textValue();
 
             parsersMap.put(name, type);
+            logger.debug("Found parser {} type {}", name, type.getClass().getName());
         }
+        logger.debug("Found {} parsers", parsersMap.size());
 
+        logger.debug("Looking for handlers....");
         Map<String, IHandler> handlersMap = new HashMap<>();
         Iterator<JsonNode> handlersElements = rootNode.get("handlers").elements();
         while (handlersElements.hasNext()) {
@@ -37,8 +46,11 @@ public class DefaultConfigLoader implements IConfigLoader {
             String name = next.get("name").textValue();
 
             handlersMap.put(name, type);
+            logger.debug("Found handler {} type {}", name, type.getClass().getName());
         }
+        logger.debug("Found {} handlers", handlersMap.size());
 
+        logger.debug("Looking for connection handlers....");
         Map<String, IConnection> connectionsMap = new HashMap<>();
         Iterator<JsonNode> connectionsElements = rootNode.get("connections").elements();
         while (connectionsElements.hasNext()) {
@@ -48,8 +60,11 @@ public class DefaultConfigLoader implements IConfigLoader {
             String name = next.get("name").textValue();
 
             connectionsMap.put(name, type);
+            logger.debug("Found connection handler {} type {}", name, type.getClass().getName());
         }
+        logger.debug("Found {} connection handlers....", connectionsMap.size());
 
+        logger.debug("Create workers....");
         List<AbstractWorker> workersList = new ArrayList<>();
         Iterator<JsonNode> workersElements = rootNode.get("workers").elements();
         while (workersElements.hasNext()) {
@@ -67,7 +82,9 @@ public class DefaultConfigLoader implements IConfigLoader {
                             parsersMap.get(workerConfig.get("parser").textValue()),
                             handlersMap.get(workerConfig.get("handler").textValue()));
             workersList.add(worker);
+            logger.debug("Create worker with config {}", workerConfig);
         }
+        logger.debug("{} workers are created", workersList.size());
 
         return new ConfigInstance(
                 parsersMap,

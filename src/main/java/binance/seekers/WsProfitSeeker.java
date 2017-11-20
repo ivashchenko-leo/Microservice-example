@@ -1,8 +1,14 @@
 package binance.seekers;
 
+import binance.config.IConfigLoader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.*;
 
 public class WsProfitSeeker extends DefaultProfitSeeker {
+    private final static Logger logger = LoggerFactory.getLogger(IConfigLoader.class);
+
     private final Map<String, Object> bidsAsks;
 
     public WsProfitSeeker() {
@@ -33,16 +39,19 @@ public class WsProfitSeeker extends DefaultProfitSeeker {
                     (a, b) -> Double.valueOf((String) b.get(0))
                             .compareTo(Double.valueOf((String) a.get(0)))
             );
-            
+
             boolean quantityEqualsZero = Double.valueOf((String) element.get(1)).equals(0.0);
             if (index >= 0) {
                 if (quantityEqualsZero) {
+                    logger.debug("Remove element with price {} and zero quantity", element.get(0));
                     target.remove(index);
                 } else {
+                    logger.debug("Replace element with price {}", element.get(0));
                     target.set(index, element);
                 }
             } else {
                 if (!quantityEqualsZero) {
+                    logger.debug("Add element with price {}", element.get(0));
                     target.add(Math.abs(index + 1), element);
                 }
             }
