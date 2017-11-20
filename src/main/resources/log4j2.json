@@ -9,7 +9,7 @@
       }
     },
     "loggers": {
-      "root": { "level": "debug", "AppenderRef": { "ref": "STDOUT" }}
+      "root": { "level": "info", "AppenderRef": { "ref": "STDOUT" }}
     }
   }
 }
