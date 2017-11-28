@@ -1,4 +1,4 @@
-package binance.parsers;
+package company.parsers;
 
 import java.util.Map;
 

@@ -1,8 +1,8 @@
-package binance.workers;
+package company.workers;
 
-import binance.connection.IConnection;
-import binance.parsers.IParser;
-import binance.seekers.IHandler;
+import company.connection.IConnection;
+import company.parsers.IParser;
+import company.seekers.IHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

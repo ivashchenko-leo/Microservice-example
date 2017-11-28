@@ -1,9 +1,9 @@
-package binance.arbitrage;
+package company.arbitrage;
 
-import binance.config.ConfigInstance;
-import binance.config.DefaultConfigLoader;
-import binance.config.IConfigLoader;
-import binance.workers.AbstractWorker;
+import company.config.ConfigInstance;
+import company.config.DefaultConfigLoader;
+import company.config.IConfigLoader;
+import company.workers.AbstractWorker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

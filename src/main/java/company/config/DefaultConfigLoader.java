@@ -1,9 +1,9 @@
-package binance.config;
+package company.config;
 
-import binance.connection.IConnection;
-import binance.parsers.IParser;
-import binance.seekers.IHandler;
-import binance.workers.AbstractWorker;
+import company.connection.IConnection;
+import company.parsers.IParser;
+import company.seekers.IHandler;
+import company.workers.AbstractWorker;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;

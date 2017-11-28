@@ -1,6 +1,6 @@
-package binance.connection;
+package company.connection;
 
-import binance.config.IConfigLoader;
+import company.config.IConfigLoader;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

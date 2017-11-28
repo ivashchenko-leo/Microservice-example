@@ -1,4 +1,4 @@
-package binance.parsers;
+package company.parsers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

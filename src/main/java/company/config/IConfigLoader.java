@@ -1,4 +1,4 @@
-package binance.config;
+package company.config;
 
 /**
  * An interface for loading a config. Implementation depends on a config type.

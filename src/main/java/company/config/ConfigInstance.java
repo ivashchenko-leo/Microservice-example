@@ -1,6 +1,6 @@
-package binance.config;
+package company.config;
 
-import binance.workers.AbstractWorker;
+import company.workers.AbstractWorker;
 
 import java.util.List;
 

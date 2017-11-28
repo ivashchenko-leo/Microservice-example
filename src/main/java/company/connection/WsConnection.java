@@ -1,4 +1,4 @@
-package binance.connection;
+package company.connection;
 
 import javax.websocket.ContainerProvider;
 import javax.websocket.WebSocketContainer;

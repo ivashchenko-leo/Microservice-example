@@ -1,4 +1,4 @@
-package binance.connection;
+package company.connection;
 
 import java.util.function.Consumer;
 

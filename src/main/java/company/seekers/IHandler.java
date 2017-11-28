@@ -1,4 +1,4 @@
-package binance.seekers;
+package company.seekers;
 
 import java.util.Map;
 

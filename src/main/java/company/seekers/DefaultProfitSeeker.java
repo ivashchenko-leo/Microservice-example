@@ -1,6 +1,6 @@
-package binance.seekers;
+package company.seekers;
 
-import binance.config.IConfigLoader;
+import company.config.IConfigLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
